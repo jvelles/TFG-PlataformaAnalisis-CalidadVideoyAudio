@@ -30,12 +30,7 @@ document.getElementById('analyze-form').addEventListener('submit', function(e) {
         document.getElementById('video-likes').textContent = data.video_info.items[0].statistics.likeCount || 'No disponible';
         document.getElementById('video-views').textContent = data.video_info.items[0].statistics.viewCount || 'No disponible';
 
-        // Análisis técnico del video
-        document.getElementById('technical-analysis').textContent = data.technical_analysis;
-
-        // Análisis de feedback de comentarios
-        document.getElementById('feedback-analysis').textContent = data.feedback_analysis;
-       
+      
         // Rellenar tabla de análisis de video
         const videoStream = data.video_streams[0];
         document.getElementById('video-analysis').innerHTML = `
