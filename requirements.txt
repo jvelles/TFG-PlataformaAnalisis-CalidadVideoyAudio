@@ -1,6 +1,7 @@
-Flask==2.2.3          # Flask, el framework para aplicaciones web
-openai==0.27.0        # Biblioteca de OpenAI para el acceso a la API
-gunicorn==20.1.0      # Servidor de producción para aplicaciones Flask
-requests==2.31.0      # Biblioteca para hacer solicitudes HTTP (usada para la API de YouTube)
-python-dotenv==1.0.0  # Biblioteca para cargar variables de entorno desde un archivo .env
-yt-dlp==2023.10.07    # Herramienta para descargar videos de YouTube
+Flask==2.2.3
+openai==0.27.0
+gunicorn==20.1.0
+requests==2.31.0
+python-dotenv==1.0.0
+yt-dlp==2023.10.07
+Werkzeug==2.0.3
