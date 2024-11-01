@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analizador de Videos de YouTube</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="shortcut icon" href="/static/images/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/images/apple-touch-icon.png" />
+    <link rel="manifest" href="/static/images/site.webmanifest" />
+</head>
+<body>
+    <!-- Encabezado con el logo centrado -->
+    <header>
+        <div class="logo-container">
+            <img src="/static/logo.png" alt="Logo de la plataforma" id="logo">
+        </div>
+    </header>
+
+    <!-- Línea horizontal de separación -->
+    <hr class="separator">
+
+    <!-- Sección principal con el contenido -->
+    <section class="main-content">
+        <h1>Analizador de Videos de YouTube</h1>
+        <form id="analyze-form">
+            <label for="video-url">Introduce la URL del video de YouTube:</label>
+            <input type="text" id="video-url" placeholder="https://www.youtube.com/watch?v=6kkNjduVlbY" required>
+            <button type="submit" id="analyze-button">Analizar</button>
+        </form>
+
+        <!-- Resultados del análisis -->
+        <div id="results">
+            <h2>Resultados del Análisis:</h2>
+
+            <!-- Información General del Video -->
+            <div id="general-info">
+                <h3>Información General del Video:</h3>
+                <p><strong>Título:</strong> <span id="video-title"></span></p>
+                <p><strong>Publicado en:</strong> <span id="video-published"></span></p>
+                <p><strong>Canal:</strong> <span id="video-channel"></span></p>
+                <p><strong>Likes:</strong> <span id="video-likes"></span></p>
+                <p><strong>Visualizaciones:</strong> <span id="video-views"></span></p>
+            </div>
+
+           
+            <!-- Botones de Desplegable -->
+            <button id="toggle-video-table">Mostrar/Ocultar Características del Video</button>
+            <button id="toggle-audio-table">Mostrar/Ocultar Características del Audio</button>
+
+            <!-- Tablas del Análisis Técnico de Video y Audio -->
+            <div id="tables-container">
+                <table id="video-table" class="analysis-table">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Características del Video</th>
+                        </tr>
+                    </thead>
+                    <tbody id="video-analysis">
+                        <!-- Datos del video aquí -->
+                    </tbody>
+                </table>
+
+                <table id="audio-table" class="analysis-table">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Características del Audio</th>
+                        </tr>
+                    </thead>
+                    <tbody id="audio-analysis">
+                        <!-- Datos del audio aquí -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Sección de comentarios -->
+            <div id="comments-section">
+                <h3>Resumen de Comentarios:</h3>
+                <ul id="comments-list"></ul>
+            </div>
+
+            <h3>Análisis Técnico del Video:</h3>
+            <p id="technical-analysis"></p>
+            
+            <h3>Feedback del Público:</h3>
+            <p id="feedback-analysis"></p>
+           
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Analizador de Videos</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/static/script.js"></script>
+</body>
+</html>
