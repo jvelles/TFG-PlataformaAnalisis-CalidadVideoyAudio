@@ -20,74 +20,79 @@
     <!-- Línea horizontal de separación -->
     <hr class="separator">
 
-    <!-- Sección principal con el contenido -->
-    <section class="main-content">
-        <h1>Analizador de Videos de YouTube</h1>
-        <form id="analyze-form">
-            <label for="video-url">Introduce la URL del video de YouTube:</label>
-            <input type="text" id="video-url" placeholder="https://www.youtube.com/watch?v=6kkNjduVlbY" required>
-            <button type="submit" id="analyze-button">Analizar</button>
-        </form>
+    <!-- Contenedor principal dividido en dos columnas -->
+    <section class="main-container">
+        <!-- Columna izquierda -->
+        <div class="left-column">
+            <h1>Analizador de Videos de YouTube</h1>
+            <form id="analyze-form">
+                <label for="video-url">Introduce la URL del video de YouTube:</label>
+                <input type="text" id="video-url" placeholder="https://www.youtube.com/watch?v=6kkNjduVlbY" required>
+                <button type="submit" id="analyze-button">Analizar</button>
+            </form>
 
-        <!-- Resultados del análisis -->
-        <div id="results">
-            <h2>Resultados del Análisis:</h2>
+            <!-- Resultados del análisis en la columna izquierda -->
+            <div id="results">
+                <h2>Información del Video</h2>
 
+                <!-- Información General del Video -->
+                <div class="section">
+                    <h3>Información General del Video:</h3>
+                    <p><strong>Título:</strong> <span id="video-title"></span></p>
+                    <p><strong>Publicado en:</strong> <span id="video-published"></span></p>
+                    <p><strong>Canal:</strong> <span id="video-channel"></span></p>
+                    <p><strong>Likes:</strong> <span id="video-likes"></span></p>
+                    <p><strong>Visualizaciones:</strong> <span id="video-views"></span></p>
+                </div>
+
+                <!-- Botones para mostrar/ocultar tablas -->
+                <div class="section-flex">
+                    <button class="toggle-btn" onclick="toggleSection('video-table')">Mostrar/Ocultar Características del Video</button>
+                    <button class="toggle-btn" onclick="toggleSection('audio-table')">Mostrar/Ocultar Características del Audio</button>
+                </div>
+
+                <!-- Contenedor de tablas de video y audio en una sola fila -->
+                <div id="tables-container">
+                    <table id="video-table" class="analysis-table" style="display: none;">
+                        <thead>
+                            <tr><th colspan="2">Características del Video</th></tr>
+                        </thead>
+                        <tbody id="video-analysis">
+                            <!-- Datos del video aquí -->
+                        </tbody>
+                    </table>
+
+                    <table id="audio-table" class="analysis-table" style="display: none;">
+                        <thead>
+                            <tr><th colspan="2">Características del Audio</th></tr>
+                        </thead>
+                        <tbody id="audio-analysis">
+                            <!-- Datos del audio aquí -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Resumen de Comentarios -->
+                <div class="section">
+                    <h3>Resumen de Comentarios:</h3>
+                    <ul id="comments-list"></ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna derecha -->
+        <div class="right-column">
+            <h2>Análisis del Video</h2>
             <!-- Contenedor para mostrar el análisis de OpenAI -->
-            <div id="analysis-section">
+            <div class="section">
                 <h3>Análisis Técnico:</h3>
                 <p id="analysis-result"></p>
+            </div>
 
+            <div class="section">
                 <h3>Análisis de Comentarios:</h3>
                 <p id="comments-analysis-result"></p>
             </div>
-
-            <!-- Información General del Video -->
-            <div id="general-info">
-                <h3>Información General del Video:</h3>
-                <p><strong>Título:</strong> <span id="video-title"></span></p>
-                <p><strong>Publicado en:</strong> <span id="video-published"></span></p>
-                <p><strong>Canal:</strong> <span id="video-channel"></span></p>
-                <p><strong>Likes:</strong> <span id="video-likes"></span></p>
-                <p><strong>Visualizaciones:</strong> <span id="video-views"></span></p>
-            </div>
-
-           
-            <!-- Botones de Desplegable -->
-            <button id="toggle-video-table">Mostrar/Ocultar Características del Video</button>
-            <button id="toggle-audio-table">Mostrar/Ocultar Características del Audio</button>
-
-            <!-- Tablas del Análisis Técnico de Video y Audio -->
-            <div id="tables-container">
-                <table id="video-table" class="analysis-table">
-                    <thead>
-                        <tr>
-                            <th colspan="2">Características del Video</th>
-                        </tr>
-                    </thead>
-                    <tbody id="video-analysis">
-                        <!-- Datos del video aquí -->
-                    </tbody>
-                </table>
-
-                <table id="audio-table" class="analysis-table">
-                    <thead>
-                        <tr>
-                            <th colspan="2">Características del Audio</th>
-                        </tr>
-                    </thead>
-                    <tbody id="audio-analysis">
-                        <!-- Datos del audio aquí -->
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Contenedor para mostrar los comentarios -->
-            <div id="comments-section">
-                <h3>Resumen de Comentarios:</h3>
-                <ul id="comments-list"></ul>
-            </div>
-           
         </div>
     </section>
 

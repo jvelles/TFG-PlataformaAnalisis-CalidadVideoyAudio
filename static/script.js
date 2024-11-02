@@ -60,6 +60,10 @@ document.getElementById('analyze-form').addEventListener('submit', function(e) {
    }
 });
 
+function toggleSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    section.style.display = (section.style.display === 'none' || section.style.display === '') ? 'block' : 'none';
+}
 
 // Mostrar comentarios
 function mostrarComentarios(comments) {
