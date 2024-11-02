@@ -6,12 +6,14 @@ import requests
 import openai
 from dotenv import load_dotenv
 import yt_dlp as youtube_dl
-import io
+from bs4 import BeautifulSoup
+import re
 
 
 
 # Cargar variables de entorno desde el archivo .env
 load_dotenv()
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 
@@ -30,12 +32,33 @@ def get_video_info(video_id):
     response = requests.get(url)
     return response.json()
 
+def clean_comment(comment):
+    # Eliminar etiquetas HTML con BeautifulSoup
+    soup = BeautifulSoup(comment, "html.parser")
+    clean_text = soup.get_text()
+
+    # Eliminar marcas de tiempo en formato "5:48" o "05:48"
+    clean_text = re.sub(r'\b\d{1,2}:\d{2}\b', '', clean_text)
+
+    # Quitar espacios adicionales
+    clean_text = clean_text.strip()
+    return clean_text
+
+
 # Obtener comentarios del video
 def get_video_comments(video_id):
     url = f"https://www.googleapis.com/youtube/v3/commentThreads?videoId={video_id}&part=snippet&key={YOUTUBE_API_KEY}&maxResults=10"
     response = requests.get(url)
-    return response.json()
+    comments_data = response.json()
 
+    # Procesar cada comentario y limpiar HTML y marcas de tiempo
+    cleaned_comments = []
+    for item in comments_data.get("items", []):
+        raw_comment = item["snippet"]["topLevelComment"]["snippet"]["textDisplay"]
+        cleaned_comment = clean_comment(raw_comment)
+        cleaned_comments.append(cleaned_comment)
+
+    return cleaned_comments
 
 # Función para descargar el video usando yt-dlp
 def download_video(video_url, video_id):
@@ -63,6 +86,58 @@ def analyze_video(video_path):
     result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     return result.stdout.decode('utf-8')
 
+'''
+def analyze_technical_data(video_streams, audio_streams):
+    prompt = f"""
+    Analiza la calidad técnica del siguiente video y audio:
+    - Video:
+      - Resolución: {video_streams[0].get('width')}x{video_streams[0].get('height')}
+      - Bitrate: {video_streams[0].get('bit_rate')}
+      - FPS: {video_streams[0].get('avg_frame_rate')}
+      - Códec: {video_streams[0].get('codec_name')}
+    - Audio:
+      - Códec: {audio_streams[0].get('codec_name')}
+      - Canales: {audio_streams[0].get('channels')}
+      - Bitrate: {audio_streams[0].get('bit_rate')}
+      - Frecuencia de Muestreo: {audio_streams[0].get('sample_rate')}
+
+    Proporciona un análisis detallado sobre la calidad técnica y sugiere posibles áreas de mejora.
+    """
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",  # Usa GPT-4 si deseas mayor precisión
+        messages=[{"role": "user", "content": prompt}]
+    )
+    return response['choices'][0]['message']['content']
+
+
+def analyze_user_comments(comments):
+
+    # Limpiar cada comentario antes de analizarlo
+    clean_comments = [
+        clean_comment_html(comment["snippet"]["topLevelComment"]["snippet"]["textDisplay"])
+        for comment in comments
+    ]
+
+    # Extraer solo el texto de cada comentario
+    comment_texts = [
+        comment["snippet"]["topLevelComment"]["snippet"]["textDisplay"]
+        for comment in comments
+    ]
+
+    # Crear el prompt con los comentarios extraídos
+    prompt = f"""
+    Analiza los siguientes comentarios de usuarios y proporciona un resumen del feedback:
+    - Comentarios:
+    {"\n".join([f'"{comment["snippet"]["topLevelComment"]["snippet"]["textDisplay"]}"' for comment in comments])}
+
+    Proporciona un análisis del feedback y saca conclusiones sobre el tipo de video y las preferencias de los usuarios.
+    """
+    response = openai.ChatCompletion.create(
+        model="gpt-3.5-turbo",  # Cambia a gpt-4 si necesitas un análisis más profundo
+        messages=[{"role": "user", "content": prompt}]
+    )
+    return response['choices'][0]['message']['content']
+'''
 
 # Ruta de la API para analizar un video
 @app.route('/analyze', methods=['POST'])
@@ -88,6 +163,17 @@ def analyze():
     analysis_json = json.loads(analysis_result)
     video_streams = [stream for stream in analysis_json['streams'] if stream['codec_type'] == 'video']
     audio_streams = [stream for stream in analysis_json['streams'] if stream['codec_type'] == 'audio']
+
+
+    '''# Realizar análisis técnico y de comentarios
+    technical_analysis = analyze_technical_data(video_streams, audio_streams)
+    comments_analysis = analyze_user_comments(comments.get("items", []))
+'''
+
+    
+    # Eliminar el video después del análisis
+    os.remove(video_path)
+
 
     # Devolver la información obtenida y el análisis del video como respuesta JSON
     return jsonify({

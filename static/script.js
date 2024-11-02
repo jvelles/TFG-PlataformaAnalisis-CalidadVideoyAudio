@@ -14,10 +14,11 @@ document.getElementById('analyze-form').addEventListener('submit', function(e) {
     })
     .then(response => response.json())
     .then(data => {
+        console.log("Datos devueltos:", data);  // Verificar respuesta completa en la consola
         mostrarInformacion(data);
-        mostrarComentarios(data.comments);
-        mostrarGeoPopularidad(data.geo_popularity);
-        crearGraficas(data);
+        mostrarComentarios(data.comments);  // Llamada para mostrar los comentarios limpios
+        document.getElementById('analysis-result').textContent = data.openai_analysis;
+
     })
     .catch(error => console.error('Error:', error));
 
@@ -59,17 +60,20 @@ document.getElementById('analyze-form').addEventListener('submit', function(e) {
 
 
 // Mostrar comentarios
-function mostrarComentarios(commentsData) {
+function mostrarComentarios(comments) {
     const commentsList = document.getElementById('comments-list');
-    commentsList.innerHTML = '';
+    commentsList.innerHTML = '';  // Limpiar la lista antes de añadir nuevos comentarios
 
-    commentsData.items.forEach(comment => {
-        const commentText = comment.snippet.topLevelComment.snippet.textDisplay;
-        const li = document.createElement('li');
-        li.textContent = commentText;
-        commentsList.appendChild(li);
+    if (!Array.isArray(comments)) {
+        console.error("Comentarios no disponibles o en formato incorrecto:", comments);
+        return;
+    }
+
+    comments.forEach(comment => {
+        const listItem = document.createElement('li');
+        listItem.textContent = comment;
+        commentsList.appendChild(listItem);
     });
 }
-
 
 
