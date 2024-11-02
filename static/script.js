@@ -17,7 +17,9 @@ document.getElementById('analyze-form').addEventListener('submit', function(e) {
         console.log("Datos devueltos:", data);  // Verificar respuesta completa en la consola
         mostrarInformacion(data);
         mostrarComentarios(data.comments);  // Llamada para mostrar los comentarios limpios
-        document.getElementById('analysis-result').textContent = data.openai_analysis;
+    // Mostrar el análisis técnico y de comentarios
+    document.getElementById('analysis-result').textContent = data.technical_analysis || 'Análisis técnico no disponible.';
+    document.getElementById('comments-analysis-result').textContent = data.comments_analysis || 'Análisis de comentarios no disponible.';
 
     })
     .catch(error => console.error('Error:', error));
@@ -69,9 +71,9 @@ function mostrarComentarios(comments) {
         return;
     }
 
-    comments.forEach(comment => {
+    comments.forEach(commentText => {
         const listItem = document.createElement('li');
-        listItem.textContent = comment;
+        listItem.textContent = commentText;  // Mostrar solo el texto del comentario
         commentsList.appendChild(listItem);
     });
 }

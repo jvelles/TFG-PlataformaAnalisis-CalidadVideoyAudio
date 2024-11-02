@@ -56,7 +56,7 @@ def get_video_comments(video_id):
     for item in comments_data.get("items", []):
         raw_comment = item["snippet"]["topLevelComment"]["snippet"]["textDisplay"]
         cleaned_comment = clean_comment(raw_comment)
-        cleaned_comments.append(cleaned_comment)
+        cleaned_comments.append({"text": cleaned_comment})
 
     return cleaned_comments
 
@@ -86,7 +86,7 @@ def analyze_video(video_path):
     result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     return result.stdout.decode('utf-8')
 
-'''
+
 def analyze_technical_data(video_streams, audio_streams):
     prompt = f"""
     Analiza la calidad técnica del siguiente video y audio:
@@ -95,49 +95,48 @@ def analyze_technical_data(video_streams, audio_streams):
       - Bitrate: {video_streams[0].get('bit_rate')}
       - FPS: {video_streams[0].get('avg_frame_rate')}
       - Códec: {video_streams[0].get('codec_name')}
+      - Formato de Píxeles: {video_streams[0].get('pix_fmt')}
+      - Espacio de Color: {video_streams[0].get('color_space')}
+      - Transf. de Color: {video_streams[0].get('color_transfer')}
+      - Prim. de Color: {video_streams[0].get('color_primaries')}
     - Audio:
       - Códec: {audio_streams[0].get('codec_name')}
       - Canales: {audio_streams[0].get('channels')}
       - Bitrate: {audio_streams[0].get('bit_rate')}
       - Frecuencia de Muestreo: {audio_streams[0].get('sample_rate')}
+      - Formato de Píxeles: {audio_streams[0].get('sample_fmt')}
+      - Frame Size: {audio_streams[0].get('frame_size')}
 
     Proporciona un análisis detallado sobre la calidad técnica y sugiere posibles áreas de mejora.
     """
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",  # Usa GPT-4 si deseas mayor precisión
-        messages=[{"role": "user", "content": prompt}]
-    )
-    return response['choices'][0]['message']['content']
-
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": prompt}]
+        )
+        return response['choices'][0]['message']['content']
+    except Exception as e:
+        print(f"Error en analyze_technical_data: {e}")
+        return "Error al analizar los datos técnicos."
 
 def analyze_user_comments(comments):
-
-    # Limpiar cada comentario antes de analizarlo
-    clean_comments = [
-        clean_comment_html(comment["snippet"]["topLevelComment"]["snippet"]["textDisplay"])
-        for comment in comments
-    ]
-
-    # Extraer solo el texto de cada comentario
-    comment_texts = [
-        comment["snippet"]["topLevelComment"]["snippet"]["textDisplay"]
-        for comment in comments
-    ]
-
-    # Crear el prompt con los comentarios extraídos
     prompt = f"""
     Analiza los siguientes comentarios de usuarios y proporciona un resumen del feedback:
     - Comentarios:
-    {"\n".join([f'"{comment["snippet"]["topLevelComment"]["snippet"]["textDisplay"]}"' for comment in comments])}
+    {"\n".join([f'"{comment}"' for comment in comments])}
 
     Proporciona un análisis del feedback y saca conclusiones sobre el tipo de video y las preferencias de los usuarios.
     """
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",  # Cambia a gpt-4 si necesitas un análisis más profundo
-        messages=[{"role": "user", "content": prompt}]
-    )
-    return response['choices'][0]['message']['content']
-'''
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": prompt}]
+        )
+        return response['choices'][0]['message']['content']
+    except Exception as e:
+        print(f"Error en analyze_user_comments: {e}")
+        return "Error al analizar los comentarios."
+
 
 # Ruta de la API para analizar un video
 @app.route('/analyze', methods=['POST'])
@@ -150,6 +149,8 @@ def analyze():
 
     # Obtener comentarios del video
     comments = get_video_comments(video_id)
+    comment_texts = [comment["text"] for comment in comments]  # Lista de solo texto
+
 
     # Descargar el video usando yt-dlp
     video_path = download_video(video_url, video_id)
@@ -165,12 +166,10 @@ def analyze():
     audio_streams = [stream for stream in analysis_json['streams'] if stream['codec_type'] == 'audio']
 
 
-    '''# Realizar análisis técnico y de comentarios
+    # Realizar análisis técnico y de comentarios
     technical_analysis = analyze_technical_data(video_streams, audio_streams)
-    comments_analysis = analyze_user_comments(comments.get("items", []))
-'''
+    comments_analysis = analyze_user_comments(comments)
 
-    
     # Eliminar el video después del análisis
     os.remove(video_path)
 
@@ -180,7 +179,9 @@ def analyze():
         'video_info': video_info,
         'video_streams': video_streams,
         'audio_streams': audio_streams,
-        'comments': comments,
+        'comments': comment_texts,  # Aquí devolvemos solo el texto de los comentarios
+        'technical_analysis': technical_analysis,
+        'comments_analysis': comments_analysis
     })
 
 if __name__ == '__main__':
