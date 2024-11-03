@@ -107,7 +107,7 @@ def analyze_technical_data(video_streams, audio_streams):
       - Formato de Píxeles: {audio_streams[0].get('sample_fmt')}
       - Frame Size: {audio_streams[0].get('frame_size')}
 
-    Proporciona un análisis detallado sobre la calidad técnica y sugiere posibles áreas de mejora.
+    Proporciona un análisis detallado sobre la calidad técnica y sugiere posibles áreas de mejora. Hazmelo bien estructurado para que pueda entenderlo mejor en una web.
     """
     try:
         response = openai.ChatCompletion.create(
@@ -125,7 +125,7 @@ def analyze_user_comments(comments):
     - Comentarios:
     {"\n".join([f'"{comment}"' for comment in comments])}
 
-    Proporciona un análisis del feedback y saca conclusiones sobre el tipo de video y las preferencias de los usuarios.
+    Proporciona un análisis del feedback y saca conclusiones sobre el tipo de video y las preferencias de los usuarios.Hazmelo bien estructurado para que pueda entenderlo mejor en una web.
     """
     try:
         response = openai.ChatCompletion.create(

@@ -30,7 +30,11 @@
                 <input type="text" id="video-url" placeholder="https://www.youtube.com/watch?v=6kkNjduVlbY" required>
                 <button type="submit" id="analyze-button">Analizar</button>
             </form>
-
+            <!-- Contenedor del loader de carga -->
+            <div id="loader" class="loader-container" style="display: none;">
+                <div class="loader"></div>
+                <p>Analizando... Por favor espera.</p>
+            </div>
             <!-- Resultados del análisis en la columna izquierda -->
             <div id="results">
                 <h2>Información del Video</h2>
