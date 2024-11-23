@@ -100,3 +100,10 @@ function toggleSection(sectionId) {
         section.style.display = 'none'; // Oculta la tabla
     }
 }
+
+// Función para dividir el texto en párrafos
+function formatTextAsParagraphs(text) {
+    // Dividir el texto en oraciones o frases usando puntos y retornos de carro
+    const sentences = text.split('. ');
+    return sentences.map(sentence => `<p>${sentence.trim()}.</p>`).join('');
+}

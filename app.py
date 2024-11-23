@@ -78,7 +78,8 @@ def download_video(video_url, video_id):
 # Función para analizar el video usando ffprobe
 def analyze_video(video_path):
     command = [
-        r'C:\Users\jvell\Desktop\ffmpeg-master-latest-win64-gpl\ffmpeg-master-latest-win64-gpl\bin\ffprobe.exe', '-v', 'error',
+        r'C:\Program Files (x86)\ffmpeg\bin\ffprobe.exe', 
+        '-v', 'error',
         '-show_format', '-show_streams',
         '-print_format', 'json',
         video_path
@@ -89,7 +90,10 @@ def analyze_video(video_path):
 
 def analyze_technical_data(video_streams, audio_streams):
     prompt = f"""
-    Analiza la calidad técnica del siguiente video y audio:
+    Proporciona un análisis fluido y continuo de la calidad técnica del siguiente video y audio. No uses listas ni puntos, 
+    sino una narrativa coherente que explique las características del video y audio de forma integrada.
+
+    Datos técnicos:
     - Video:
       - Resolución: {video_streams[0].get('width')}x{video_streams[0].get('height')}
       - Bitrate: {video_streams[0].get('bit_rate')}
@@ -107,12 +111,15 @@ def analyze_technical_data(video_streams, audio_streams):
       - Formato de Píxeles: {audio_streams[0].get('sample_fmt')}
       - Frame Size: {audio_streams[0].get('frame_size')}
 
-    Proporciona un análisis detallado sobre la calidad técnica y sugiere posibles áreas de mejora. Hazmelo bien estructurado para que pueda entenderlo mejor en una web.
+   Por favor, escribe de manera accesible y evita la jerga técnica. Explica cómo estos datos influyen en la calidad del video y 
+    el audio en términos comprensibles, y sugiere áreas de mejora si es necesario.
     """
     try:
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": prompt}]
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.7,  # Ajusta la temperatura para hacer que la respuesta sea más variada y fluida
+            top_p=0.9
         )
         return response['choices'][0]['message']['content']
     except Exception as e:
@@ -121,16 +128,23 @@ def analyze_technical_data(video_streams, audio_streams):
 
 def analyze_user_comments(comments):
     prompt = f"""
-    Analiza los siguientes comentarios de usuarios y proporciona un resumen del feedback:
-    - Comentarios:
+    Proporciona un resumen fluido y continuo de los siguientes comentarios de usuarios sobre el video. Usa un lenguaje natural y evita 
+    cortes en párrafos o puntos separados. Integra las ideas principales de los comentarios y describe las preferencias de los usuarios.
+
+    Comentarios de usuarios:
     {"\n".join([f'"{comment}"' for comment in comments])}
 
-    Proporciona un análisis del feedback y saca conclusiones sobre el tipo de video y las preferencias de los usuarios.Hazmelo bien estructurado para que pueda entenderlo mejor en una web.
+    El análisis debe ser accesible y directo, usando un estilo narrativo para facilitar la lectura. Explica en general si los comentarios 
+    reflejan satisfacción, críticas o sugerencias, y si hay temas o puntos recurrentes. Finaliza con una conclusión breve.
+
+
     """
     try:
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": prompt}]
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.7,  # Ajusta la temperatura para hacer que la respuesta sea más variada y fluida
+            top_p=0.9
         )
         return response['choices'][0]['message']['content']
     except Exception as e:
@@ -179,7 +193,7 @@ def analyze():
         'video_info': video_info,
         'video_streams': video_streams,
         'audio_streams': audio_streams,
-        'comments': comment_texts,  # Aquí devolvemos solo el texto de los comentarios
+        'comments': comment_texts,  
         'technical_analysis': technical_analysis,
         'comments_analysis': comments_analysis
     })
