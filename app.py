@@ -127,27 +127,33 @@ def analyze_technical_data(video_streams, audio_streams):
         return "Error al analizar los datos técnicos."
 
 def analyze_user_comments(comments):
+    # Genera el texto del prompt correctamente
     prompt = f"""
     Proporciona un resumen fluido y continuo de los siguientes comentarios de usuarios sobre el video. Usa un lenguaje natural y evita 
     cortes en párrafos o puntos separados. Integra las ideas principales de los comentarios y describe las preferencias de los usuarios.
 
     Comentarios de usuarios:
-    {r"\n".join([f'"{comment}"' for comment in comments])}
+    {"\n".join([f'"{comment}"' for comment in comments])}
 
     El análisis debe ser accesible y directo, usando un estilo narrativo para facilitar la lectura. Explica en general si los comentarios 
     reflejan satisfacción, críticas o sugerencias, y si hay temas o puntos recurrentes. Finaliza con una conclusión breve.
     """
+    
     try:
+        # Llama a la API de OpenAI
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": prompt}],
-            temperature=0.7,  # Ajusta la temperatura para hacer que la respuesta sea más variada y fluida
+            temperature=0.7,  # Ajusta la temperatura para respuestas variadas
             top_p=0.9
         )
+        # Retorna el contenido de la respuesta
         return response['choices'][0]['message']['content']
     except Exception as e:
+        # Manejo de errores
         print(f"Error en analyze_user_comments: {e}")
         return "Error al analizar los comentarios."
+
 
 
 # Ruta de la API para analizar un video
