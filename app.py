@@ -132,7 +132,7 @@ def analyze_user_comments(comments):
     cortes en párrafos o puntos separados. Integra las ideas principales de los comentarios y describe las preferencias de los usuarios.
 
     Comentarios de usuarios:
-    {"\\n".join([f'"{comment}"' for comment in comments])}
+    {r"\n".join([f'"{comment}"' for comment in comments])}
 
     El análisis debe ser accesible y directo, usando un estilo narrativo para facilitar la lectura. Explica en general si los comentarios 
     reflejan satisfacción, críticas o sugerencias, y si hay temas o puntos recurrentes. Finaliza con una conclusión breve.
