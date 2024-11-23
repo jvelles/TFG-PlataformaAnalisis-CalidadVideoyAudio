@@ -1,8 +1,8 @@
-Flask==2.1.3
-Werkzeug==2.1.2
-openai==0.27.0
-gunicorn==20.1.0
-requests==2.31.0
-python-dotenv==1.0.0
-yt-dlp==2024.08.06
-
+Flask
+Werkzeug
+openai
+gunicorn
+requests
+python-dotenv
+yt_dlp
+bs4
