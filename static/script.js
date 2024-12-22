@@ -15,7 +15,15 @@ document.getElementById('analyze-form').addEventListener('submit', function(e) {
         },
         body: JSON.stringify({ video_url: videoUrl }),
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(errorData => {
+                alert(errorData.error); // Mostrar mensaje de error al usuario
+                throw new Error(errorData.error);
+            });
+        }
+        return response.json();
+    })
     .then(data => {
         console.log("Datos devueltos:", data);  // Verificar respuesta completa en la consola
 

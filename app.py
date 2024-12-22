@@ -26,6 +26,19 @@ def home():
 # Obtener la clave de la API de YouTube desde las variables de entorno
 YOUTUBE_API_KEY = os.getenv('YOUTUBE_API_KEY')
 
+def extract_video_id(video_url):
+    import re
+    youtube_regex = (
+        r"^(https?:\/\/)?"  # Esquema opcional
+        r"(www\.)?"  # Subdominio opcional
+        r"(youtube\.com\/.*?v=|youtu\.be\/)"  # Dominio y v= o formato corto
+        r"([a-zA-Z0-9_-]{11})"  # ID del video (11 caracteres alfanuméricos)
+    )
+    match = re.search(youtube_regex, video_url)
+    return match.group(4) if match else None
+
+
+
 # Función para obtener datos de la API de YouTube
 def get_video_info(video_id):
     url = f"https://www.googleapis.com/youtube/v3/videos?id={video_id}&part=snippet,contentDetails,statistics&key={YOUTUBE_API_KEY}"
@@ -118,7 +131,7 @@ def analyze_technical_data(video_streams, audio_streams):
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": prompt}],
-            temperature=0.7,  # Ajusta la temperatura para hacer que la respuesta sea más variada y fluida
+            temperature=0.7,  
             top_p=0.9
         )
         return response['choices'][0]['message']['content']
@@ -160,7 +173,10 @@ def analyze_user_comments(comments):
 @app.route('/analyze', methods=['POST'])
 def analyze():
     video_url = request.json.get('video_url')
-    video_id = video_url.split("v=")[-1]  # Extraer el ID del video de la URL
+    video_id = extract_video_id(video_url)  # Validar y extraer el ID del video
+
+    if not video_id:
+        return jsonify({"error": "La URL proporcionada no es válida. Asegúrate de usar un enlace de YouTube válido."}), 400
 
     # Obtener información del video desde la API de YouTube
     video_info = get_video_info(video_id)
