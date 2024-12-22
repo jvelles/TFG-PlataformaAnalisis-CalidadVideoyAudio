@@ -56,25 +56,29 @@
                 </div>
 
                 <!-- Contenedor de tablas de video y audio en una sola fila -->
-                <div id="tables-container">
-                    <table id="video-table" class="analysis-table" style="display: none;">
-                        <thead>
-                            <tr><th colspan="2">Características del Video</th></tr>
-                        </thead>
-                        <tbody id="video-analysis">
-                            <!-- Datos del video aquí -->
-                        </tbody>
-                    </table>
-
-                    <table id="audio-table" class="analysis-table" style="display: none;">
-                        <thead>
-                            <tr><th colspan="2">Características del Audio</th></tr>
-                        </thead>
-                        <tbody id="audio-analysis">
-                            <!-- Datos del audio aquí -->
-                        </tbody>
-                    </table>
+                <div id="tables-container" class="section">
+                    <div style="overflow-x: auto;">
+                        <table id="video-table" class="analysis-table" style="display: none;">
+                            <thead>
+                                <tr><th colspan="2">Características del Video</th></tr>
+                            </thead>
+                            <tbody id="video-analysis">
+                                <!-- Datos del video aquí -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table id="audio-table" class="analysis-table" style="display: none;">
+                            <thead>
+                                <tr><th colspan="2">Características del Audio</th></tr>
+                            </thead>
+                            <tbody id="audio-analysis">
+                                <!-- Datos del audio aquí -->
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+                
 
                 <!-- Resumen de Comentarios -->
                 <div class="section">

@@ -184,3 +184,41 @@ footer {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+/* Para pantallas pequeñas, como teléfonos */
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column; /* Cambiar de columnas a filas */
+        align-items: center;    /* Centrar contenido */
+    }
+
+    .left-column, .right-column {
+        width: 100%;           /* Cada columna ocupa el 100% */
+        margin-bottom: 20px;   /* Separación entre secciones */
+    }
+
+    #video-url {
+        width: 90%; /* Ajustar el campo de entrada */
+    }
+
+    .toggle-btn {
+        font-size: 12px;       /* Reducir tamaño de texto */
+    }
+
+    .analysis-table {
+        font-size: 12px;       /* Reducir tamaño de las tablas */
+        width: 100%;           /* Tablas ocupan todo el ancho */
+        overflow-x: auto;      /* Scroll horizontal si es necesario */
+    }
+}
+
+/* Para pantallas medianas, como tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .main-container {
+        flex-direction: row; /* Mantener columnas */
+    }
+
+    .left-column, .right-column {
+        width: 48%;           /* Cada columna ocupa 48% */
+    }
+}
