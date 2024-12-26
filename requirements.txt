@@ -1,6 +1,6 @@
 Flask
 Werkzeug
-openai
+openai==0.28.0
 gunicorn
 requests
 python-dotenv

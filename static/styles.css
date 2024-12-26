@@ -222,3 +222,20 @@ footer {
         width: 48%;           /* Cada columna ocupa 48% */
     }
 }
+
+.section {
+    margin-bottom: 20px; /* Espacio entre secciones */
+}
+
+.section h3 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.section p {
+    line-height: 1.6; /* Espaciado entre líneas */
+    margin-bottom: 10px; /* Separación entre párrafos */
+    font-size: 16px;
+}
+

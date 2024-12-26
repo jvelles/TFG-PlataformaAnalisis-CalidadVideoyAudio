@@ -31,9 +31,9 @@ document.getElementById('analyze-form').addEventListener('submit', function(e) {
         mostrarInformacion(data);
         mostrarComentarios(data.comments);
         
-        // Mostrar el análisis técnico y de comentarios
-        document.getElementById('analysis-result').textContent = data.technical_analysis || 'Análisis técnico no disponible.';
-        document.getElementById('comments-analysis-result').textContent = data.comments_analysis || 'Análisis de comentarios no disponible.';
+            // Reemplazar textContent por funciones que dividen en párrafos
+            mostrarAnalisisTecnico(data.technical_analysis);
+            mostrarAnalisisDeComentarios(data.comments_analysis);
 
         // Ocultar el loader al terminar el análisis
         hideLoader();
@@ -57,8 +57,29 @@ function hideLoader() {
 // Funciones para mostrar los resultados de análisis (sin cambios en el contenido original)
 function mostrarInformacion(data) {
     const videoInfo = data.video_info.items[0].snippet;
+
+        // Convertir la fecha manualmente a un formato legible
+        const rawDate = videoInfo.publishedAt; // Ejemplo: "2024-12-21T18:29:32Z"
+        let formattedDate = "Fecha no disponible";
+    
+        // Validar y convertir la fecha usando regex
+        const dateMatch = rawDate.match(/^(\d{4})-(\d{2})-(\d{2})/); // Extraer año, mes y día
+        if (dateMatch) {
+            const year = dateMatch[1];
+            const month = parseInt(dateMatch[2], 10); // Convertir a entero
+            const day = dateMatch[3];
+    
+            // Crear un formato como "21 de diciembre de 2024"
+            const monthNames = [
+                "enero", "febrero", "marzo", "abril", "mayo", "junio",
+                "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+            ];
+            formattedDate = `${day} de ${monthNames[month - 1]} de ${year}`;
+        }
+    
+    
     document.getElementById('video-title').textContent = videoInfo.title;
-    document.getElementById('video-published').textContent = videoInfo.publishedAt;
+    document.getElementById('video-published').textContent = formattedDate;
     document.getElementById('video-channel').textContent = videoInfo.channelTitle;
     document.getElementById('video-likes').textContent = data.video_info.items[0].statistics.likeCount || 'No disponible';
     document.getElementById('video-views').textContent = data.video_info.items[0].statistics.viewCount || 'No disponible';
@@ -115,3 +136,41 @@ function formatTextAsParagraphs(text) {
     const sentences = text.split('. ');
     return sentences.map(sentence => `<p>${sentence.trim()}.</p>`).join('');
 }
+
+function mostrarAnalisisTecnico(technicalAnalysis) {
+    const container = document.getElementById('analysis-result');
+    container.innerHTML = ''; // Limpiar contenido previo
+
+    // Dividir el análisis en párrafos
+    const paragraphs = technicalAnalysis.split('. '); // Dividir por puntos
+    paragraphs.forEach(paragraph => {
+        if (paragraph.trim()) { // Asegurarse de no añadir párrafos vacíos
+            const p = document.createElement('p');
+            // Verificar y limpiar el punto al final
+            const cleanedParagraph = paragraph.trim().replace(/\.+$/, ''); // Eliminar puntos al final
+            p.textContent = cleanedParagraph + '.'; // Añadir un único punto
+            container.appendChild(p); // Agregar cada párrafo al contenedor
+        }
+    });
+}
+
+function mostrarAnalisisDeComentarios(commentsAnalysis) {
+    const container = document.getElementById('comments-analysis-result');
+    container.innerHTML = ''; // Limpiar contenido previo
+
+    // Dividir el análisis en párrafos
+    const paragraphs = commentsAnalysis.split('. '); // Dividir por puntos
+    paragraphs.forEach(paragraph => {
+        if (paragraph.trim()) { // Asegurarse de no añadir párrafos vacíos
+            const p = document.createElement('p');
+            // Verificar y limpiar el punto al final
+            const cleanedParagraph = paragraph.trim().replace(/\.+$/, ''); // Eliminar puntos al final
+            p.textContent = cleanedParagraph + '.'; // Añadir un único punto
+            container.appendChild(p); // Agregar cada párrafo al contenedor
+        }
+    });
+}
+
+
+
+

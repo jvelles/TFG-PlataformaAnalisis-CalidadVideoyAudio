@@ -91,7 +91,7 @@ def download_video(video_url, video_id):
 # Función para analizar el video usando ffprobe
 def analyze_video(video_path):
     command = [
-        r'C:\Program Files (x86)\ffmpeg\bin\ffprobe.exe', 
+        r'C:\ffmpeg\bin\ffprobe.exe', 
         '-v', 'error',
         '-show_format', '-show_streams',
         '-print_format', 'json',
