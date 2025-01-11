@@ -54,22 +54,19 @@ function hideLoader() {
     document.getElementById('loader').style.display = 'none';
 }
 
-// Funciones para mostrar los resultados de análisis (sin cambios en el contenido original)
+// Funciones para mostrar los resultados de análisis 
 function mostrarInformacion(data) {
     const videoInfo = data.video_info.items[0].snippet;
 
         // Convertir la fecha manualmente a un formato legible
-        const rawDate = videoInfo.publishedAt; // Ejemplo: "2024-12-21T18:29:32Z"
+        const rawDate = videoInfo.publishedAt; 
         let formattedDate = "Fecha no disponible";
     
-        // Validar y convertir la fecha usando regex
         const dateMatch = rawDate.match(/^(\d{4})-(\d{2})-(\d{2})/); // Extraer año, mes y día
         if (dateMatch) {
             const year = dateMatch[1];
-            const month = parseInt(dateMatch[2], 10); // Convertir a entero
-            const day = dateMatch[3];
-    
-            // Crear un formato como "21 de diciembre de 2024"
+            const month = parseInt(dateMatch[2], 10); 
+            const day = dateMatch[3];    
             const monthNames = [
                 "enero", "febrero", "marzo", "abril", "mayo", "junio",
                 "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
@@ -170,7 +167,3 @@ function mostrarAnalisisDeComentarios(commentsAnalysis) {
         }
     });
 }
-
-
-
-
