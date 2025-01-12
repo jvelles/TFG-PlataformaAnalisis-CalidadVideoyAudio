@@ -1,4 +1,4 @@
-// Evento para el botón de análisis
+// 1. Evento para el botón de análisis
 document.getElementById('analyze-form').addEventListener('submit', function(e) {
     e.preventDefault();  // Evitar la recarga de página
 
@@ -18,61 +18,55 @@ document.getElementById('analyze-form').addEventListener('submit', function(e) {
     .then(response => {
         if (!response.ok) {
             return response.json().then(errorData => {
-                alert(errorData.error); // Mostrar mensaje de error al usuario
+                alert(errorData.error); 
                 throw new Error(errorData.error);
             });
         }
         return response.json();
     })
     .then(data => {
-        console.log("Datos devueltos:", data);  // Verificar respuesta completa en la consola
-
-        // Llamadas a tus funciones para mostrar la información recibida
+        console.log("Datos devueltos:", data); 
         mostrarInformacion(data);
         mostrarComentarios(data.comments);
-        
-            // Reemplazar textContent por funciones que dividen en párrafos
-            mostrarAnalisisTecnico(data.technical_analysis);
-            mostrarAnalisisDeComentarios(data.comments_analysis);
+        mostrarAnalisisTecnico(data.technical_analysis);
+        mostrarAnalisisDeComentarios(data.comments_analysis);
 
         // Ocultar el loader al terminar el análisis
         hideLoader();
     })
     .catch(error => {
         console.error('Error:', error);
-        hideLoader(); // Ocultar el loader en caso de error
+        hideLoader(); 
     });
 });
 
-// Función para mostrar el loader
+// 2. Funciones para manejar el loader
 function showLoader() {
     document.getElementById('loader').style.display = 'flex';
 }
 
-// Función para ocultar el loader
 function hideLoader() {
     document.getElementById('loader').style.display = 'none';
 }
 
-// Funciones para mostrar los resultados de análisis 
+// 3. Función para mostrar información del video
 function mostrarInformacion(data) {
     const videoInfo = data.video_info.items[0].snippet;
-
-        // Convertir la fecha manualmente a un formato legible
-        const rawDate = videoInfo.publishedAt; 
-        let formattedDate = "Fecha no disponible";
+// Convertir la fecha a un formato legible
+    const rawDate = videoInfo.publishedAt; 
+    let formattedDate = "Fecha no disponible";
     
-        const dateMatch = rawDate.match(/^(\d{4})-(\d{2})-(\d{2})/); // Extraer año, mes y día
-        if (dateMatch) {
-            const year = dateMatch[1];
-            const month = parseInt(dateMatch[2], 10); 
-            const day = dateMatch[3];    
-            const monthNames = [
-                "enero", "febrero", "marzo", "abril", "mayo", "junio",
-                "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
-            ];
-            formattedDate = `${day} de ${monthNames[month - 1]} de ${year}`;
-        }
+    const dateMatch = rawDate.match(/^(\d{4})-(\d{2})-(\d{2})/); // Extraer año, mes y día
+    if (dateMatch) {
+        const year = dateMatch[1];
+        const month = parseInt(dateMatch[2], 10); 
+        const day = dateMatch[3];    
+        const monthNames = [
+            "enero", "febrero", "marzo", "abril", "mayo", "junio",
+            "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"
+        ];
+        formattedDate = `${day} de ${monthNames[month - 1]} de ${year}`;
+    }
     
     
     document.getElementById('video-title').textContent = videoInfo.title;
@@ -106,6 +100,7 @@ function mostrarInformacion(data) {
     `;
 }
 
+// 4. Función para mostrar comentarios
 function mostrarComentarios(comments) {
     const commentsList = document.getElementById('comments-list');
     commentsList.innerHTML = '';  // Limpiar la lista antes de añadir nuevos comentarios
@@ -117,7 +112,7 @@ function mostrarComentarios(comments) {
     });
 }
 
-// Función para mostrar/ocultar secciones de video y audio
+// 5. Función para alternar la visibilidad de secciones
 function toggleSection(sectionId) {
     const section = document.getElementById(sectionId);
     if (section.style.display === 'none' || section.style.display === '') {
@@ -127,16 +122,16 @@ function toggleSection(sectionId) {
     }
 }
 
-// Función para dividir el texto en párrafos
+// 6. Función para dividir el texto en párrafos
 function formatTextAsParagraphs(text) {
-    // Dividir el texto en oraciones o frases usando puntos y retornos de carro
     const sentences = text.split('. ');
     return sentences.map(sentence => `<p>${sentence.trim()}.</p>`).join('');
 }
 
+// 7. Función para mostrar análisis técnico
 function mostrarAnalisisTecnico(technicalAnalysis) {
     const container = document.getElementById('analysis-result');
-    container.innerHTML = ''; // Limpiar contenido previo
+    container.innerHTML = ''; 
 
     // Dividir el análisis en párrafos
     const paragraphs = technicalAnalysis.split('. '); // Dividir por puntos
@@ -144,13 +139,14 @@ function mostrarAnalisisTecnico(technicalAnalysis) {
         if (paragraph.trim()) { // Asegurarse de no añadir párrafos vacíos
             const p = document.createElement('p');
             // Verificar y limpiar el punto al final
-            const cleanedParagraph = paragraph.trim().replace(/\.+$/, ''); // Eliminar puntos al final
-            p.textContent = cleanedParagraph + '.'; // Añadir un único punto
+            const cleanedParagraph = paragraph.trim().replace(/\.+$/, ''); 
+            p.textContent = cleanedParagraph + '.'; 
             container.appendChild(p); // Agregar cada párrafo al contenedor
         }
     });
 }
 
+// 8. Función para mostrar análisis de comentarios
 function mostrarAnalisisDeComentarios(commentsAnalysis) {
     const container = document.getElementById('comments-analysis-result');
     container.innerHTML = ''; // Limpiar contenido previo
@@ -158,19 +154,18 @@ function mostrarAnalisisDeComentarios(commentsAnalysis) {
     // Dividir el análisis en párrafos
     const paragraphs = commentsAnalysis.split('. '); // Dividir por puntos
     paragraphs.forEach(paragraph => {
-        if (paragraph.trim()) { // Asegurarse de no añadir párrafos vacíos
+        if (paragraph.trim()) { // Asegurar de no añadir párrafos vacíos
             const p = document.createElement('p');
             // Verificar y limpiar el punto al final
-            const cleanedParagraph = paragraph.trim().replace(/\.+$/, ''); // Eliminar puntos al final
-            p.textContent = cleanedParagraph + '.'; // Añadir un único punto
+            const cleanedParagraph = paragraph.trim().replace(/\.+$/, ''); 
+            p.textContent = cleanedParagraph + '.'; 
             container.appendChild(p); // Agregar cada párrafo al contenedor
         }
     });
 }
 
-// Botón para alternar modo oscuro
+// 9. Evento para alternar modo oscuro
 const toggleButton = document.getElementById('dark-mode-toggle');
-
 toggleButton.addEventListener('click', () => {
     // Alternar la clase 'dark-mode' en el body
     document.body.classList.toggle('dark-mode');
