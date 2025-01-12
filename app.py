@@ -9,8 +9,6 @@ import yt_dlp as youtube_dl
 from bs4 import BeautifulSoup
 import re
 
-
-
 # Cargar variables de entorno desde el archivo .env
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -32,7 +30,7 @@ def extract_video_id(video_url):
         r"^(https?:\/\/)?"  # Esquema opcional
         r"(www\.)?"  # Subdominio opcional
         r"(youtube\.com\/.*?v=|youtu\.be\/)"  # Dominio y v= o formato corto
-        r"([a-zA-Z0-9_-]{11})"  # ID del video (11 caracteres alfanuméricos)
+        r"([a-zA-Z0-9_-]{11})"  # ID del video
     )
     match = re.search(youtube_regex, video_url)
     return match.group(4) if match else None
@@ -45,12 +43,13 @@ def get_video_info(video_id):
     response = requests.get(url)
     return response.json()
 
+# Función para limpiar comentarios de YouTube
 def clean_comment(comment):
     # Eliminar etiquetas HTML con BeautifulSoup
     soup = BeautifulSoup(comment, "html.parser")
     clean_text = soup.get_text()
 
-    # Eliminar marcas de tiempo en formato "5:48" o "05:48"
+    # Eliminar marcas de tiempo en formato "05:48"
     clean_text = re.sub(r'\b\d{1,2}:\d{2}\b', '', clean_text)
 
     # Quitar espacios adicionales
@@ -58,7 +57,7 @@ def clean_comment(comment):
     return clean_text
 
 
-# Obtener comentarios del video
+# Función para obtener comentarios del video
 def get_video_comments(video_id):
     url = f"https://www.googleapis.com/youtube/v3/commentThreads?videoId={video_id}&part=snippet&key={YOUTUBE_API_KEY}&maxResults=10"
     response = requests.get(url)
@@ -100,8 +99,9 @@ def analyze_video(video_path):
     result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     return result.stdout.decode('utf-8')
 
-
+# Función para analizar el video usando API de OpenAI
 def analyze_technical_data(video_streams, audio_streams):
+ # Crear el prompt
     prompt = f"""
     Proporciona un análisis fluido y continuo de la calidad técnica del siguiente video y audio. No uses listas ni puntos, 
     sino una narrativa coherente que explique las características del video y audio de forma integrada.
@@ -139,11 +139,12 @@ def analyze_technical_data(video_streams, audio_streams):
         print(f"Error en analyze_technical_data: {e}")
         return "Error al analizar los datos técnicos."
 
+# Función para analizar los comentarios usando API de OpenAI
 def analyze_user_comments(comments):
     # Construir el texto de comentarios
     comments_text = "\n".join([f'"{comment}"' for comment in comments])
     
-    # Crear el prompt usando comments_text
+    # Crear el prompt
     prompt = f"""
     Proporciona un resumen fluido y continuo de los siguientes comentarios de usuarios sobre el video. Usa un lenguaje natural y evita 
     cortes en párrafos o puntos separados. Integra las ideas principales de los comentarios y describe las preferencias de los usuarios.
@@ -167,8 +168,6 @@ def analyze_user_comments(comments):
         return "Error al analizar los comentarios."
 
 
-
-
 # Ruta de la API para analizar un video
 @app.route('/analyze', methods=['POST'])
 def analyze():
@@ -183,8 +182,7 @@ def analyze():
 
     # Obtener comentarios del video
     comments = get_video_comments(video_id)
-    comment_texts = [comment["text"] for comment in comments]  # Lista de solo texto
-
+    comment_texts = [comment["text"] for comment in comments]  
 
     # Descargar el video usando yt-dlp
     video_path = download_video(video_url, video_id)
@@ -199,14 +197,12 @@ def analyze():
     video_streams = [stream for stream in analysis_json['streams'] if stream['codec_type'] == 'video']
     audio_streams = [stream for stream in analysis_json['streams'] if stream['codec_type'] == 'audio']
 
-
     # Realizar análisis técnico y de comentarios
     technical_analysis = analyze_technical_data(video_streams, audio_streams)
     comments_analysis = analyze_user_comments(comments)
 
     # Eliminar el video después del análisis
     os.remove(video_path)
-
 
     # Devolver la información obtenida y el análisis del video como respuesta JSON
     return jsonify({
@@ -219,5 +215,5 @@ def analyze():
     })
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))  # Obtiene el puerto de la variable de entorno
-    app.run(debug=True, host='0.0.0.0', port=port)  # Asegúrate de usar host='0.0.0.0'
+    port = int(os.environ.get("PORT", 5000)) 
+    app.run(debug=True, host='0.0.0.0', port=port) 
