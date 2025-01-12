@@ -167,3 +167,16 @@ function mostrarAnalisisDeComentarios(commentsAnalysis) {
         }
     });
 }
+
+// Botón para alternar modo oscuro
+const toggleButton = document.getElementById('dark-mode-toggle');
+
+toggleButton.addEventListener('click', () => {
+    // Alternar la clase 'dark-mode' en el body
+    document.body.classList.toggle('dark-mode');
+    if (document.body.classList.contains('dark-mode')) {
+        toggleButton.textContent = '☀️ Modo Claro';
+    } else {
+        toggleButton.textContent = '🌙 Modo Oscuro';
+    }
+});

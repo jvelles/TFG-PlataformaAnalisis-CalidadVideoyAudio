@@ -3,14 +3,37 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
+    transition: background-color 0.3s, color 0.3s;
+    background-color: var(--background-color);
+    color: var(--text-color);
+
 }
 
-.logo-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* Estilo del encabezado */
+.header-with-bar {
+    padding: 15px 20px;
 }
+
+/* Contenedor del logo y título */
+.logo-title-container {
+    display: flex;
+    align-items: center;          /* Alinear verticalmente */
+    justify-content: center;      /* Mantener el contenedor centrado */
+    gap: 10px;                    /* Espaciado entre logo y título */
+    position: relative;           /* Permitir ajustes de posición */
+}
+
+/* Título */
+#site-title {
+    font-size: 26px;
+    color: #333;
+    font-weight: bold;
+    margin: 0;
+    position: relative;           /* Permitir ajustes relativos */
+    left: -20px;       /* Ajustar hacia la izquierda (puedes probar valores) */
+    top: -15px;              
+}
+
 
 #logo {
     width: 200px;
@@ -57,54 +80,97 @@ h3 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 20px;
+    gap: 15px; /* Espacio entre elementos */
 }
 
 #video-url {
-    padding: 10px;
     width: 100%;
     max-width: 400px;
-    margin-bottom: 20px;
+    padding: 10px 15px;
+    border: 2px solid #ccc; /* Borde inicial */
+    border-radius: 8px; /* Bordes redondeados */
+    font-size: 16px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    transition: all 0.3s ease; /* Transición suave */
 }
 
+#video-url:focus {
+    border-color: #ff4d4d; /* Cambia el color del borde al enfocar */
+    box-shadow: 0px 4px 12px rgba(255, 77, 77, 0.4); /* Resaltar sombra */
+    outline: none; /* Elimina el borde azul predeterminado */
+}
+
+
 button {
-    background-color: #FF0000;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
     border: none;
     padding: 10px 20px;
     cursor: pointer;
     font-size: 16px;
     border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+
 }
 
-button:hover {
-    background-color: #cc0000;
+/* Botón */
+button#analyze-button {
+    background-color: #ff4d4d; /* Rojo llamativo */
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px; /* Bordes redondeados */
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Sombra suave */
+    transition: all 0.3s ease; /* Transición para hover */
 }
+
+button#analyze-button:hover {
+    background-color: #cc0000; /* Rojo más oscuro al pasar el cursor */
+    transform: scale(1.05); /* Efecto de agrandamiento */
+    box-shadow: 0px 6px 12px rgba(204, 0, 0, 0.4); /* Resalta la sombra */
+}
+
 
 /* Sección de información */
 .section {
-    margin-bottom: 20px;
-    padding: 15px;
-    border: 1px solid #ddd;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--border-color);
     border-radius: 8px;
-    background-color: #f9f9f9;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Sombra suave */
+    padding: 15px;
+    transition: background-color 0.3s, border-color 0.3s;
+
 }
 
-/* Botón de mostrar/ocultar */
+/* Contenedor de los botones */
+.button-container {
+    display: flex;
+    justify-content: center; /* Centra los botones horizontalmente */
+    gap: 10px; /* Espaciado entre los botones */
+    width: 100%; /* Ocupa todo el ancho disponible */
+    margin: 0 auto; /* Centra el contenedor */
+}
+
+/* Botones */
 .toggle-btn {
     background-color: #ff4d4d;
     color: white;
-    padding: 10px 15px;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
+    padding: 10px 20px;
+    border-radius: 8px; /* Bordes redondeados */
     font-size: 14px;
-    margin: 10px 0;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
 }
 
 .toggle-btn:hover {
-    background-color: #e60000;
+    background-color: #cc0000;
+    transform: scale(1.05); /* Efecto de agrandamiento */
 }
 
 /* Contenedor de tablas */
@@ -117,21 +183,20 @@ button:hover {
 
 /* Tablas */
 .analysis-table {
+    background-color: var(--secondary-color);
     border-collapse: collapse;
     width: 100%;
-    max-width: 45%; /* Limita el ancho para que las tablas se ajusten al contenedor */
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .analysis-table th, .analysis-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    color: var(--text-color);
 }
 
 .analysis-table th {
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: #ffffff; /* Fondo de encabezado */
+    color: #000000;
 }
 
 /* Resumen de Comentarios */
@@ -201,9 +266,16 @@ footer {
         width: 90%; /* Ajustar el campo de entrada */
     }
 
-    .toggle-btn {
-        font-size: 12px;       /* Reducir tamaño de texto */
-    }
+/* Transiciones */
+.toggle-btn {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
 
     .analysis-table {
         font-size: 12px;       /* Reducir tamaño de las tablas */
@@ -238,4 +310,80 @@ footer {
     margin-bottom: 10px; /* Separación entre párrafos */
     font-size: 16px;
 }
+
+/* Variables para el tema claro */
+:root {
+    --background-color: #f4f4f4;
+    --text-color: #333;
+    --primary-color: #ff4d4d;
+    --secondary-color: white;
+    --border-color: #ddd;
+}
+
+/* Variables para el modo oscuro */
+body.dark-mode {
+    --background-color: #121212;
+    --text-color: #f4f4f4;
+    --primary-color: #ff4d4d;
+    --secondary-color: #1f1f1f;
+    --border-color: #333;
+}
+/* Título en el modo oscuro */
+body.dark-mode #site-title {
+    color: var(--text-color); /* Cambia automáticamente al color blanco definido en las variables */
+}
+
+/* Cuadro de entrada en modo oscuro */
+body.dark-mode input[type="text"] {
+    background-color: var(--secondary-color); /* Fondo oscuro */
+    color: var(--text-color);                /* Texto claro */
+    border: 1px solid var(--border-color);   /* Borde definido */
+    transition: background-color 0.3s, color 0.3s, border 0.3s; /* Transición suave */
+}
+
+/* Placeholder en modo oscuro */
+body.dark-mode input[type="text"]::placeholder {
+    color: #aaa; /* Placeholder más claro */
+}
+
+/* Encabezados en modo oscuro */
+body.dark-mode h2, 
+body.dark-mode h3 {
+    color: var(--text-color); /* Cambia a blanco los encabezados */
+}
+
+/* Subtítulos o textos con estilos específicos */
+body.dark-mode .section h3, 
+body.dark-mode .section h2 {
+    color: var(--text-color); /* Aplica blanco también dentro de contenedores */
+}
+
+/* Opcional: Cualquier texto general */
+body.dark-mode p, 
+body.dark-mode span {
+    color: var(--text-color); /* Asegúrate de que los párrafos y spans sean blancos */
+}
+
+/* Botón flotante */
+.floating-dark-mode-btn {
+    position: fixed;
+    bottom: 20px; /* Distancia desde la parte inferior */
+    right: 20px;  /* Distancia desde la parte derecha */
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 50px; /* Redondear el botón */
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+/* Fondo del loader (sombreado oscuro) */
+body.dark-mode #loader {
+    background-color: rgba(0, 0, 0, 0.8); /* Fondo negro con 80% de opacidad */
+    color: var(--text-color);            /* Texto claro para la legibilidad */
+}
+
 

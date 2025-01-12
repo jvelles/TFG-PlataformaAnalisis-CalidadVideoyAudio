@@ -11,11 +11,13 @@
 </head>
 <body>
     <!-- Encabezado con el logo centrado -->
-    <header>
-        <div class="logo-container">
+    <header class="header-with-bar">
+        <div class="logo-title-container">
             <img src="/static/logo.png" alt="Logo de la plataforma" id="logo">
+            <h1 id="site-title">Analizador de Videos de YouTube</h1>
         </div>
     </header>
+    
 
     <!-- Línea horizontal de separación -->
     <hr class="separator">
@@ -24,7 +26,6 @@
     <section class="main-container">
         <!-- Columna izquierda -->
         <div class="left-column">
-            <h1>Analizador de Videos de YouTube</h1>
             <form id="analyze-form">
                 <label for="video-url">Introduce la URL del video de YouTube:</label>
                 <input type="text" id="video-url" placeholder="https://www.youtube.com/watch?v=6kkNjduVlbY" required>
@@ -50,7 +51,7 @@
                 </div>
 
                 <!-- Botones para mostrar/ocultar tablas -->
-                <div class="section-flex">
+                <div class="button-container">
                     <button class="toggle-btn" onclick="toggleSection('video-table')">Mostrar/Ocultar Características del Video</button>
                     <button class="toggle-btn" onclick="toggleSection('audio-table')">Mostrar/Ocultar Características del Audio</button>
                 </div>
@@ -105,6 +106,8 @@
     </div>
 
     </section>
+
+    <button id="dark-mode-toggle" class="floating-dark-mode-btn">🌙 Modo Oscuro</button>
 
     <footer>
         <p>&copy; 2024 Analizador de Videos</p>
