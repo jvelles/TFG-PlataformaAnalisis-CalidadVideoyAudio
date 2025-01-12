@@ -10,37 +10,34 @@
     <link rel="manifest" href="/static/images/site.webmanifest" />
 </head>
 <body>
-    <!-- Encabezado con el logo centrado -->
+
+    <!-- 1. Encabezado -->
     <header class="header-with-bar">
         <div class="logo-title-container">
             <img src="/static/logo.png" alt="Logo de la plataforma" id="logo">
             <h1 id="site-title">Analizador de Videos de YouTube</h1>
         </div>
     </header>
-    
 
-    <!-- Línea horizontal de separación -->
+    <!-- 2. Línea de separación -->
     <hr class="separator">
 
-    <!-- Contenedor principal dividido en dos columnas -->
+    <!-- 3. Contenedor principal -->
     <section class="main-container">
-        <!-- Columna izquierda -->
+
+        <!-- 3.1. Columna izquierda -->
         <div class="left-column">
             <form id="analyze-form">
                 <label for="video-url">Introduce la URL del video de YouTube:</label>
                 <input type="text" id="video-url" placeholder="https://www.youtube.com/watch?v=6kkNjduVlbY" required>
                 <button type="submit" id="analyze-button">Analizar</button>
             </form>
-            <!-- Contenedor del loader de carga -->
             <div id="loader" class="loader-container" style="display: none;">
                 <div class="loader"></div>
                 <p>Analizando... Por favor espera.</p>
             </div>
-            <!-- Resultados del análisis en la columna izquierda -->
             <div id="results">
                 <h2>Información del Video</h2>
-
-                <!-- Información General del Video -->
                 <div class="section">
                     <h3>Información General del Video:</h3>
                     <p><strong>Título:</strong> <span id="video-title"></span></p>
@@ -49,23 +46,17 @@
                     <p><strong>Likes:</strong> <span id="video-likes"></span></p>
                     <p><strong>Visualizaciones:</strong> <span id="video-views"></span></p>
                 </div>
-
-                <!-- Botones para mostrar/ocultar tablas -->
                 <div class="button-container">
                     <button class="toggle-btn" onclick="toggleSection('video-table')">Mostrar/Ocultar Características del Video</button>
                     <button class="toggle-btn" onclick="toggleSection('audio-table')">Mostrar/Ocultar Características del Audio</button>
                 </div>
-
-                <!-- Contenedor de tablas de video y audio en una sola fila -->
                 <div id="tables-container" class="section">
                     <div style="overflow-x: auto;">
                         <table id="video-table" class="analysis-table" style="display: none;">
                             <thead>
                                 <tr><th colspan="2">Características del Video</th></tr>
                             </thead>
-                            <tbody id="video-analysis">
-                                <!-- Datos del video aquí -->
-                            </tbody>
+                            <tbody id="video-analysis"></tbody>
                         </table>
                     </div>
                     <div style="overflow-x: auto;">
@@ -73,15 +64,10 @@
                             <thead>
                                 <tr><th colspan="2">Características del Audio</th></tr>
                             </thead>
-                            <tbody id="audio-analysis">
-                                <!-- Datos del audio aquí -->
-                            </tbody>
+                            <tbody id="audio-analysis"></tbody>
                         </table>
                     </div>
                 </div>
-                
-
-                <!-- Resumen de Comentarios -->
                 <div class="section">
                     <h3>Resumen de Comentarios:</h3>
                     <ul id="comments-list"></ul>
@@ -89,31 +75,32 @@
             </div>
         </div>
 
-    <!-- Columna derecha -->
-    <div class="right-column">
-        <h2>Análisis del Video</h2>
-        <!-- Contenedor para mostrar el análisis técnico -->
-        <div class="section">
-            <h3>Análisis Técnico:</h3>
-            <div id="analysis-result"></div> <!-- Cambié <p> por <div> -->
+        <!-- 3.2. Columna derecha -->
+        <div class="right-column">
+            <h2>Análisis del Video</h2>
+            <div class="section">
+                <h3>Análisis Técnico:</h3>
+                <div id="analysis-result"></div>
+            </div>
+            <div class="section">
+                <h3>Análisis de Comentarios:</h3>
+                <div id="comments-analysis-result"></div>
+            </div>
         </div>
-
-        <!-- Contenedor para mostrar el análisis de comentarios -->
-        <div class="section">
-            <h3>Análisis de Comentarios:</h3>
-            <div id="comments-analysis-result"></div> <!-- Cambié <p> por <div> -->
-        </div>
-    </div>
 
     </section>
 
+    <!-- 4. Botón modo oscuro -->
     <button id="dark-mode-toggle" class="floating-dark-mode-btn">🌙 Modo Oscuro</button>
 
+    <!-- 5. Pie de página -->
     <footer>
         <p>&copy; 2024 Analizador de Videos</p>
     </footer>
 
+    <!-- 6. Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/static/script.js"></script>
+
 </body>
 </html>
