@@ -93,12 +93,26 @@
     <!-- 4. Botón modo oscuro -->
     <button id="dark-mode-toggle" class="floating-dark-mode-btn">🌙 Modo Oscuro</button>
 
-    <!-- 5. Pie de página -->
+    <!-- 5. Mensaje de error -->
+    <div id="errorModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>¡Ups! Algo salió mal</h2>
+            <p id="modal-message" class="modal-message">La URL proporcionada no es válida. Por favor, introduce un enlace de YouTube válido.</p>
+            <button id="modal-ok-btn">Aceptar</button>
+        </div>
+    </div>
+
+    <!-- 6. Pie de página -->
     <footer>
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="{{ url_for('terminos') }}" class="terms-btn">Términos y Política de Privacidad</a>
+        </div>
         <p>&copy; 2024 Analizador de Videos</p>
     </footer>
+    
 
-    <!-- 6. Scripts -->
+    <!-- 7. Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/static/script.js"></script>
 

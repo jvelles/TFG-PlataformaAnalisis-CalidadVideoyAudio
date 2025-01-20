@@ -1,0 +1,214 @@
+/*************************************************************
+ * ESTILOS GENERALES
+ *************************************************************/
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+    text-align: center;
+}
+
+
+/*************************************************************
+ * CONTENEDOR PRINCIPAL
+ *************************************************************/
+
+.content {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+
+/*************************************************************
+ * ENCABEZADOS
+ *************************************************************/
+
+
+h1 {
+    font-size: 30px;
+    color: #222;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 24px;
+    color: #444;
+    border-bottom: 3px solid #ff0000;
+    padding-bottom: 8px;
+    margin-top: 25px;
+}
+
+h3 {
+    font-size: 20px;
+    color: #555;
+    margin-top: 20px;
+}
+
+
+/*************************************************************
+ * PARRAFOS Y LISTAS
+ *************************************************************/
+
+
+p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #666;
+}
+
+ul {
+    padding-left: 20px;
+}
+
+ul li {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+
+/*************************************************************
+ * ESTILO DE NEGRITAS
+ *************************************************************/
+
+
+strong {
+    color: #222;
+}
+
+
+/*************************************************************
+ * BOTON DE REGRESO
+ *************************************************************/
+
+
+.button-container {
+    text-align: center;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.back-button {
+    background-color: #ff4d4d;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+    top: 20px; 
+}
+
+.back-button:hover {
+    background-color: #cc0000;
+    transform: scale(1.05);
+}
+
+
+/*************************************************************
+ * FOOTER
+ *************************************************************/
+
+
+footer {
+    margin-top: 40px;
+    font-size: 14px;
+    color: #777;
+    text-align: center;
+}
+
+
+/*************************************************************
+ * LOGO
+ *************************************************************/
+
+
+#logo {
+    width: 200px;
+}
+ .logo-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    margin-top: 20px;  
+}
+
+.logo-container a:hover {
+    transform: scale(1.1); 
+}
+
+
+/*************************************************************
+ * MODO OSCURO
+ *************************************************************/
+
+
+.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+/* Contenedor principal */
+.dark-mode .content {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border: 1px solid #ff6b6b;
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.3);
+}
+
+/* Estilos del texto */
+.dark-mode h1, 
+.dark-mode h2, 
+.dark-mode h3 {
+    color: #ff6b6b;
+}
+
+/* Párrafos */
+.dark-mode p {
+    color: #ccc;
+}
+
+/* Listas */
+.dark-mode ul li {
+    color: #ddd;
+}
+
+/* Enlaces */
+.dark-mode a {
+    color: #ff6b6b;
+    text-decoration: none;
+}
+
+.dark-mode a:hover {
+    color: #ff4d4d;
+}
+
+/* Separadores */
+.dark-mode hr {
+    border-color: #ff6b6b;
+}
+
+/* Botón de volver */
+.dark-mode .back-button {
+    background-color: #ff6b6b;
+    color: white;
+}
+
+.dark-mode .back-button:hover {
+    background-color: #ff4d4d;
+}
+
+.dark-mode strong {
+    color: #ffffff;  
+}

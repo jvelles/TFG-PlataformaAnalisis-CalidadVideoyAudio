@@ -1,4 +1,5 @@
 // 1. Evento para el botón de análisis
+
 document.getElementById('analyze-form').addEventListener('submit', function(e) {
     e.preventDefault();  // Evitar la recarga de página
 
@@ -18,7 +19,7 @@ document.getElementById('analyze-form').addEventListener('submit', function(e) {
     .then(response => {
         if (!response.ok) {
             return response.json().then(errorData => {
-                alert(errorData.error); 
+                showModal(errorData.error); // Mostrar modal personalizado
                 throw new Error(errorData.error);
             });
         }
@@ -41,6 +42,7 @@ document.getElementById('analyze-form').addEventListener('submit', function(e) {
 });
 
 // 2. Funciones para manejar el loader
+
 function showLoader() {
     document.getElementById('loader').style.display = 'flex';
 }
@@ -50,8 +52,21 @@ function hideLoader() {
 }
 
 // 3. Función para mostrar información del video
+
 function mostrarInformacion(data) {
     const videoInfo = data.video_info.items[0].snippet;
+
+// Mostrar botón de descarga si está disponible
+if (data.download_available) {
+    const downloadContainer = document.getElementById('download-container');
+    const downloadLink = document.getElementById('download-link');
+
+    // Configurar el enlace de descarga
+    downloadLink.href = data.download_url; 
+    downloadLink.textContent = 'Descargar Video'; 
+    downloadLink.style.display = 'inline-block'; 
+    downloadContainer.style.display = 'block';   
+}
 // Convertir la fecha a un formato legible
     const rawDate = videoInfo.publishedAt; 
     let formattedDate = "Fecha no disponible";
@@ -101,6 +116,7 @@ function mostrarInformacion(data) {
 }
 
 // 4. Función para mostrar comentarios
+
 function mostrarComentarios(comments) {
     const commentsList = document.getElementById('comments-list');
     commentsList.innerHTML = '';  // Limpiar la lista antes de añadir nuevos comentarios
@@ -113,6 +129,7 @@ function mostrarComentarios(comments) {
 }
 
 // 5. Función para alternar la visibilidad de secciones
+
 function toggleSection(sectionId) {
     const section = document.getElementById(sectionId);
     if (section.style.display === 'none' || section.style.display === '') {
@@ -123,12 +140,14 @@ function toggleSection(sectionId) {
 }
 
 // 6. Función para dividir el texto en párrafos
+
 function formatTextAsParagraphs(text) {
     const sentences = text.split('. ');
     return sentences.map(sentence => `<p>${sentence.trim()}.</p>`).join('');
 }
 
 // 7. Función para mostrar análisis técnico
+
 function mostrarAnalisisTecnico(technicalAnalysis) {
     const container = document.getElementById('analysis-result');
     container.innerHTML = ''; 
@@ -147,6 +166,7 @@ function mostrarAnalisisTecnico(technicalAnalysis) {
 }
 
 // 8. Función para mostrar análisis de comentarios
+
 function mostrarAnalisisDeComentarios(commentsAnalysis) {
     const container = document.getElementById('comments-analysis-result');
     container.innerHTML = ''; // Limpiar contenido previo
@@ -165,13 +185,53 @@ function mostrarAnalisisDeComentarios(commentsAnalysis) {
 }
 
 // 9. Evento para alternar modo oscuro
+
 const toggleButton = document.getElementById('dark-mode-toggle');
-toggleButton.addEventListener('click', () => {
-    // Alternar la clase 'dark-mode' en el body
-    document.body.classList.toggle('dark-mode');
-    if (document.body.classList.contains('dark-mode')) {
-        toggleButton.textContent = '☀️ Modo Claro';
-    } else {
-        toggleButton.textContent = '🌙 Modo Oscuro';
+document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('darkMode') === 'enabled') {
+        document.body.classList.add('dark-mode');
+        if (toggleButton) {
+            toggleButton.textContent = '☀️ Modo Claro';
+        }
     }
 });
+if (toggleButton) {
+    toggleButton.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        
+        if (document.body.classList.contains('dark-mode')) {
+            localStorage.setItem('darkMode', 'enabled');
+            toggleButton.textContent = '☀️ Modo Claro';
+        } else {
+            localStorage.setItem('darkMode', 'disabled');
+            toggleButton.textContent = '🌙 Modo Oscuro';
+        }
+    });
+}
+
+// 10. Función para mostrar el modal de error personalizado
+
+function showModal(message) {
+    const modal = document.getElementById('errorModal');
+    const modalMessage = document.getElementById('modal-message');
+    modalMessage.textContent = message;
+    modal.style.display = "flex";
+
+    // Cerrar modal al hacer clic en la "X" o el botón Aceptar
+    document.querySelector('.close').onclick = function() {
+        modal.style.display = "none";
+    };
+
+    document.getElementById('modal-ok-btn').onclick = function() {
+        modal.style.display = "none";
+    };
+
+    // Cerrar al hacer clic fuera del modal
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
+}
+
+

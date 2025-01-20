@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template,send_file
 import subprocess
 import os
 import json
@@ -8,6 +8,8 @@ from dotenv import load_dotenv
 import yt_dlp as youtube_dl
 from bs4 import BeautifulSoup
 import re
+from io import BytesIO
+
 
 # Cargar variables de entorno desde el archivo .env
 load_dotenv()
@@ -20,6 +22,11 @@ app = Flask(__name__, template_folder='templates', static_folder='static')
 @app.route('/')
 def home():
     return render_template('index.html')
+    
+# Ruta para mostrar el terminos.html
+@app.route('/terminos')
+def terminos():
+    return render_template('terminos.html')
 
 # Obtener la clave de la API de YouTube desde las variables de entorno
 YOUTUBE_API_KEY = os.getenv('YOUTUBE_API_KEY')
@@ -201,8 +208,15 @@ def analyze():
     technical_analysis = analyze_technical_data(video_streams, audio_streams)
     comments_analysis = analyze_user_comments(comments)
 
+    # Almacenar temporalmente el video en memoria para la descarga
+    with open(video_path, 'rb') as f:
+        video_data = BytesIO(f.read())  
+
     # Eliminar el video después del análisis
     os.remove(video_path)
+
+    # Guardar el archivo en memoria global 
+    app.config['VIDEO_DATA'] = video_data 
 
     # Devolver la información obtenida y el análisis del video como respuesta JSON
     return jsonify({
@@ -211,8 +225,18 @@ def analyze():
         'audio_streams': audio_streams,
         'comments': comment_texts,  
         'technical_analysis': technical_analysis,
-        'comments_analysis': comments_analysis
+        'comments_analysis': comments_analysis,
+        'download_available': True,  
+        'download_url': f'/download/{video_id}' 
     })
+
+@app.route('/download/<video_id>', methods=['GET'])
+def download(video_id):
+    video_data = app.config.get('VIDEO_DATA')  
+    if not video_data:
+        return jsonify({"error": "El archivo ya no está disponible para descarga."}), 404
+
+    return send_file(video_data, as_attachment=True, download_name=f"{video_id}.mp4", mimetype='video/mp4')
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000)) 

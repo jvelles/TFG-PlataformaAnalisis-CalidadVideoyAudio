@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Términos y Política de Privacidad</title>
+    <link rel="stylesheet" href="/static/terms.css">
+    <script src="/static/script.js"></script>
+
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <a href="/">
+                <img src="/static/logo.png" alt="Logo de la plataforma" id="logo">
+            </a>
+        </div>
+    </header>
+    
+    <div class="content">
+        <h1>Términos de Uso y Política de Privacidad</h1>
+
+        <h2>1. Uso de la Plataforma</h2>
+        <p>La plataforma permite analizar videos de YouTube extrayendo datos técnicos y sociales con fines informativos. Al utilizar esta herramienta, el usuario acepta las condiciones aquí descritas.</p>
+
+        <h3>1.1. Condiciones de Uso</h3>
+        <ul>
+            <li>La plataforma se ofrece "tal cual" sin garantías de disponibilidad o precisión absoluta de los resultados.</li>
+            <li>No se permite el uso de la plataforma con fines comerciales sin autorización previa.</li>
+            <li>Los datos analizados no pueden ser utilizados para infringir las políticas de YouTube u otras normativas legales.</li>
+        </ul>
+
+        <h3>1.2. Responsabilidad del Usuario</h3>
+        <ul>
+            <li>El usuario es responsable del uso que haga de los datos obtenidos mediante la plataforma.</li>
+            <li>No se permite el uso de la herramienta para recopilar información de terceros de manera ilegal o con fines no éticos.</li>
+        </ul>
+
+        <h2>2. Privacidad y Protección de Datos</h2>
+        <p>Nuestra plataforma <strong>no almacena información personal</strong> de manera permanente. Los datos analizados se procesan en tiempo real y se eliminan tras su uso.</p>
+
+        <h3>2.1. Uso de APIs de Terceros</h3>
+        <p>Utilizamos la <strong>API de YouTube</strong> para obtener información de los videos, y la <strong>API de OpenAI</strong> para procesar comentarios.</p>
+
+        <h3>2.2. Seguridad de la Información</h3>
+        <ul>
+            <li>No compartimos datos con terceros.</li>
+            <li>Las claves API están almacenadas de forma segura para evitar accesos no autorizados.</li>
+            <li>Se aplican medidas de seguridad para proteger la plataforma.</li>
+        </ul>
+
+        <h2>3. Limitaciones Legales</h2>
+        <p>No se permite la descarga o distribución de contenido de YouTube sin la debida autorización.</p>
+
+        <h2>4. Protección de la API Key</h2>
+        <p>Las claves API están protegidas mediante cifrado y medidas de seguridad para evitar accesos no autorizados.</p>
+
+        <h2>5. Cambios en los Términos y Condiciones</h2>
+        <p>Nos reservamos el derecho de actualizar este documento en cualquier momento.</p>
+
+        <h2>6. Contacto</h2>
+        <p>Para cualquier consulta puedes contactarnos a través de <strong>j.velles.2019@alumnos.urjc.es</strong>.</p>
+
+        <div class="button-container">
+            <a href="/" class="back-button">Volver a la página principal</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Analizador de Videos</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+            }
+        });
+    </script>
+    
+</body>
+</html>

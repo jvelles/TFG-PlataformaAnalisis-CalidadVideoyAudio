@@ -182,6 +182,29 @@ BOTONES
     transform: scale(1.05);
 }
 
+.download-btn {
+    display: inline-block;
+    background-color: #ff4d4d;
+    color: white; 
+    border: none;
+    padding: 12px 20px; 
+    font-size: 16px; 
+    font-weight: bold; 
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); 
+    text-decoration: none; 
+}
+
+.download-btn:hover {
+    background-color: #cc0000; 
+    transform: scale(1.05); 
+    box-shadow: 0px 6px 12px rgba(204, 0, 0, 0.4); 
+}
+
+
 /*************************************************************
 CONTENEDOR DE TABLAS
 *************************************************************/
@@ -387,3 +410,149 @@ body.dark-mode #loader {
     background-color: rgba(0, 0, 0, 0.8);
     color: var(--text-color);
 }
+
+/* Estilo del botón terminos en modo claro */
+.terms-btn {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-weight: bold;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.terms-btn:hover {
+    background-color: #ddd;
+    color: #000;
+}
+
+/* Estilo del botón terminos en modo oscuro */
+.dark-mode .terms-btn {
+    background-color: #333;
+    color: #f4f4f4;
+    border: 1px solid #666;
+}
+
+.dark-mode .terms-btn:hover {
+    background-color: #555;
+    color: #fff;
+}
+
+/*************************************************************
+ * MODAL ERROR
+ *************************************************************/
+
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); 
+    backdrop-filter: blur(5px); 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Animación de aparición del modal */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Contenido del modal */
+.modal-content {
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    animation: fadeIn 0.3s ease-out;
+    position: relative; 
+}
+
+/* Botón de cerrar (X) */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ff4d4d;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close:hover {
+    color: #cc0000;
+}
+
+/* Título del modal */
+.modal-content h2 {
+    color: #ff4d4d;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* Mensaje del modal */
+#modal-message {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Botón de aceptar */
+#modal-ok-btn {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s ease;
+}
+
+#modal-ok-btn:hover {
+    background: #cc0000;
+}
+
+/* Modo oscuro para el modal */
+.dark-mode .modal-content {
+    background: #333;
+    color: #fff;
+}
+
+.dark-mode .close {
+    color: #fff;
+}
+
+.dark-mode #modal-ok-btn {
+    background-color: #666;
+}
+
+.dark-mode #modal-ok-btn:hover {
+    background-color: #444;
+}
+.dark-mode .modal-content h2 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #ff6961; 
+}
+
+.dark-mode #modal-message {
+    font-weight: bold;
+    color: #ffffff;  
+}
+
+
