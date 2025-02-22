@@ -27,8 +27,6 @@ TFG-PlataformaAnalisis-CalidadVideoAudio
   - terms.html → Página de Términos y Condiciones  
 - backend  
   - app.py → Servidor Flask para procesar análisis  
-  - youtube_api.py → Extracción de datos de YouTube  
-  - openai_analysis.py → Análisis de comentarios con IA  
 - .env → Claves API necesarias  
 - requirements.txt → Dependencias del proyecto  
 - README.md → Documentación del proyecto  
@@ -38,15 +36,14 @@ TFG-PlataformaAnalisis-CalidadVideoAudio
 
 ## Tecnologías Utilizadas
 - **Frontend**: HTML, CSS, JavaScript  
-- **Backend**: Python (Flask)  
+- **Backend**: Python (Flask y FFprobe)  
 - **APIs**: YouTube Data API, OpenAI API  
-- **Base de datos (si aplica)**: SQLite / JSON temporal  
 
 ---
 
 ## Requisitos Previos
 Antes de ejecutar la plataforma, asegúrate de tener:  
-- Python 3.x instalado.  
+- Python 3.8 instalado.  
 - Claves API para YouTube Data API y OpenAI en un archivo `.env`.  
 - Librerías necesarias instaladas (ver `requirements.txt`).  
 
