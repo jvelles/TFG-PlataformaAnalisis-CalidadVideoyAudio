@@ -55,18 +55,6 @@ function hideLoader() {
 
 function mostrarInformacion(data) {
     const videoInfo = data.video_info.items[0].snippet;
-
-// Mostrar botón de descarga si está disponible
-if (data.download_available) {
-    const downloadContainer = document.getElementById('download-container');
-    const downloadLink = document.getElementById('download-link');
-
-    // Configurar el enlace de descarga
-    downloadLink.href = data.download_url; 
-    downloadLink.textContent = 'Descargar Video'; 
-    downloadLink.style.display = 'inline-block'; 
-    downloadContainer.style.display = 'block';   
-}
 // Convertir la fecha a un formato legible
     const rawDate = videoInfo.publishedAt; 
     let formattedDate = "Fecha no disponible";

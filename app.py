@@ -22,7 +22,7 @@ app = Flask(__name__, template_folder='templates', static_folder='static')
 @app.route('/')
 def home():
     return render_template('index.html')
-    
+
 # Ruta para mostrar el terminos.html
 @app.route('/terminos')
 def terminos():
@@ -66,7 +66,7 @@ def clean_comment(comment):
 
 # Función para obtener comentarios del video
 def get_video_comments(video_id):
-    url = f"https://www.googleapis.com/youtube/v3/commentThreads?videoId={video_id}&part=snippet&key={YOUTUBE_API_KEY}&maxResults=10"
+    url = f"https://www.googleapis.com/youtube/v3/commentThreads?videoId={video_id}&part=snippet&key={YOUTUBE_API_KEY}&maxResults=20"
     response = requests.get(url)
     comments_data = response.json()
 
@@ -136,7 +136,7 @@ def analyze_technical_data(video_streams, audio_streams):
     """
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7,  
             top_p=0.9
@@ -164,7 +164,7 @@ def analyze_user_comments(comments):
     """
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4o",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7,
             top_p=0.9
@@ -208,15 +208,8 @@ def analyze():
     technical_analysis = analyze_technical_data(video_streams, audio_streams)
     comments_analysis = analyze_user_comments(comments)
 
-    # Almacenar temporalmente el video en memoria para la descarga
-    with open(video_path, 'rb') as f:
-        video_data = BytesIO(f.read())  
-
     # Eliminar el video después del análisis
     os.remove(video_path)
-
-    # Guardar el archivo en memoria global 
-    app.config['VIDEO_DATA'] = video_data 
 
     # Devolver la información obtenida y el análisis del video como respuesta JSON
     return jsonify({
@@ -226,17 +219,7 @@ def analyze():
         'comments': comment_texts,  
         'technical_analysis': technical_analysis,
         'comments_analysis': comments_analysis,
-        'download_available': True,  
-        'download_url': f'/download/{video_id}' 
     })
-
-@app.route('/download/<video_id>', methods=['GET'])
-def download(video_id):
-    video_data = app.config.get('VIDEO_DATA')  
-    if not video_data:
-        return jsonify({"error": "El archivo ya no está disponible para descarga."}), 404
-
-    return send_file(video_data, as_attachment=True, download_name=f"{video_id}.mp4", mimetype='video/mp4')
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000)) 
