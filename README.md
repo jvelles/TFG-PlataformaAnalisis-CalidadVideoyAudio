@@ -52,7 +52,8 @@ Antes de ejecutar la plataforma, asegúrate de tener:
 ---
 
 ## Instalación
-1. **Clonar el repositorio**  
+
+## 1. Clonar el repositorio 
 
 git clone https://github.com/jvelles/TFG-PlataformaAnalisis-CalidadVideoyAudio.git
 cd TFG-PlataformaAnalisis-CalidadVideoyAudio
