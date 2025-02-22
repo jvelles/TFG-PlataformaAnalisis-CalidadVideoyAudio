@@ -1,7 +1,7 @@
-# Plataforma Web para el Análisis de Calidad de Video y Audio en Streaming
+# PLATAFORMA WEB PARA EL ANÁLISIS DE AUDIO Y VIDEO EN VIDEOS DE YOUTUBE Y DIAGNÓSTICO CON IA
 
 ## Descripción
-Esta plataforma permite analizar la calidad de video y audio de transmisiones en **YouTube** mediante su URL. Extrae información técnica del video, incluyendo resolución, bitrate, FPS y características del audio. Además, emplea **inteligencia artificial** para analizar los comentarios y obtener insights sobre la percepción de los usuarios.
+Esta plataforma permite analizar la calidad de video y audio de transmisiones en **YouTube** mediante su URL. Extrae información técnica del video, incluyendo resolución, bitrate, FPS y características del audio. Además, emplea **inteligencia artificial** para analizar los comentarios y obtener información sobre la percepción de los usuarios.
 
 ---
 
@@ -17,21 +17,22 @@ Esta plataforma permite analizar la calidad de video y audio de transmisiones en
 
 ## 📂 Estructura del Proyecto
 
-📁 TFG-PlataformaAnalisis-CalidadVideoyAudio
-│── 📁 static
-│   ├── 📁 css → Estilos y temas de la plataforma
-│   ├── 📁 js → Funcionalidad y scripts
-│   ├── 📁 images → Iconos y recursos gráficos
-│── 📁 templates
-│   ├── index.html → Página principal
-│   ├── terms.html → Página de Términos y Condiciones
-│── 📁 backend
-│   ├── app.py → Servidor Flask para procesar análisis
-│   ├── youtube_api.py → Extracción de datos de YouTube
-│   ├── openai_analysis.py → Análisis de comentarios con IA
-│── .env → Claves API necesarias
-│── requirements.txt → Dependencias del proyecto
-│── README.md → Documentación del proyecto
+TFG-PlataformaAnalisis-CalidadVideoAudio  
+- static  
+  - css → Estilos y temas de la plataforma  
+  - js → Funcionalidad y scripts  
+  - images → Iconos y recursos gráficos  
+- templates  
+  - index.html → Página principal  
+  - terms.html → Página de Términos y Condiciones  
+- backend  
+  - app.py → Servidor Flask para procesar análisis  
+  - youtube_api.py → Extracción de datos de YouTube  
+  - openai_analysis.py → Análisis de comentarios con IA  
+- .env → Claves API necesarias  
+- requirements.txt → Dependencias del proyecto  
+- README.md → Documentación del proyecto  
+
 
 ---
 
@@ -53,23 +54,23 @@ Antes de ejecutar la plataforma, asegúrate de tener:
 
 ## Instalación
 
-## 1. Clonar el repositorio 
+### 1. Clonar el repositorio 
 
 git clone https://github.com/jvelles/TFG-PlataformaAnalisis-CalidadVideoyAudio.git
 cd TFG-PlataformaAnalisis-CalidadVideoyAudio
 
-## 2. Instalar dependencias
+### 2. Instalar dependencias
 
 pip install -r requirements.txt
 
-## 3. Configurar las claves API
+### 3. Configurar las claves API
 
 Crear un archivo `.env` en la raíz del proyecto con el siguiente contenido:
 
 - YOUTUBE_API_KEY=TU_CLAVE_AQUI
 - OPENAI_API_KEY=TU_CLAVE_AQUI
 
-## 4. Ejecutar la aplicación
+### 4. Ejecutar la aplicación
 
 python app.py
 
@@ -80,12 +81,13 @@ La aplicación estará disponible en http://127.0.0.1:5000/.
 2. Analizar el contenido para obtener estadísticas técnicas.
 3. Ver el análisis de los comentarios basado en IA.
 4. Alternar entre modo claro y oscuro según preferencia.
+5. Consultar los Terminos de Uso y Política de Privacidad
 
 ---
 
 ## Mejoras Futuras
 - Implementación de más plataformas de streaming.
-- Soporte para análisis en tiempo real.
+- Soporte para tener acceso todo el mundo vía host.
 - Generación de informes descargables en PDF.
 - Integración con bases de datos para almacenamiento de resultados.
 
